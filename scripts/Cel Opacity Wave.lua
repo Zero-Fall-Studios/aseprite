@@ -37,6 +37,7 @@ local dlg = Dialog("Cel Opacity Wave")
 dlg:separator{ text="This will change all selected cells opacity according to a sine wave" }
   :slider{id="minOpacity",label="Min Opacity",min=0,max=255,value=255}
   :slider{id="maxOpacity",label="Max Opacity",min=0,max=255,value=255}
+  :slider{id="frequency",label="Frequency",min=1,max=20,value=20}
   :button{ id="ok", text="OK", focus=true }
   :button{ text="Cancel" }
 dlg:show()
@@ -50,7 +51,7 @@ if data.ok then
       for i, cel in ipairs(cels) do
         a = data.minOpacity
         b = data.maxOpacity
-        opacity = a + (b - a) / 2 + math.sin(i) * (b - a) / 2
+        opacity = a + (b - a) / 2 + math.sin(i / data.frequency) * (b - a) / 2
         cel.opacity = opacity
       end
     end)
