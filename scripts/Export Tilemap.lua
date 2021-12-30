@@ -4,13 +4,24 @@ if not spr then return print "No active sprite" end
 local fs = app.fs
 local output_folder = fs.fileTitle(spr.filename)
 
-local function export_tileset(tileset, name, padding, numWidth, startIdx)
+local function export_tileset(tileset, name, padding, inputWidth, startIdx)
   local grid = tileset.grid
   local size = grid.tileSize
   if #tileset > 0 then
     local spec = spr.spec
-    spec.width = (size.width * numWidth) + (padding * numWidth ) + padding
-    spec.height = (((size.height + (padding * 2) - padding) * #tileset) / numWidth) + padding
+    local numCols = inputWidth
+    if numCols > (#tileset - 1) then
+      numCols = #tileset - 1
+    end
+    if numCols == 0 then
+      numCols = 1
+    end
+    local numRows = math.ceil((#tileset - 1) / numCols)
+    if numRows == 0 then
+      numRows = 1
+    end
+    spec.width = ((size.width + padding) * numCols ) + padding
+    spec.height = ((size.height + padding) * numRows) + padding
     local image = Image(spec)
     image:clear()
     local curW = 0
@@ -19,7 +30,7 @@ local function export_tileset(tileset, name, padding, numWidth, startIdx)
       local tile = tileset:getTile(i)
       image:drawImage(tile, padding + ((curW * size.width) + (curW*padding)), padding + ((curH * size.height) + (curH * padding)))
       curW = curW + 1
-      if curW == numWidth then
+      if curW == numCols then
         curW = 0
         curH = curH + 1
       end
@@ -41,7 +52,7 @@ local function startExport()
     if layer.isTilemap then
       n = n + 1
       if data["tileset" .. n] then
-        export_tileset(layer.tileset, layer.name, data.padding, data.numWidth, data.startIdx)
+        export_tileset(layer.tileset, layer.name, data.padding, data.numCols, data.startIdx)
       end
     end
   end
@@ -60,7 +71,7 @@ local function addTilemaps()
 end
 
 dlg:number{ id="padding", label="Padding:", text="16" }
-dlg:number{ id="numWidth", label="Num Width:", text="8"}
+dlg:number{ id="numCols", label="Num Width:", text="8"}
 dlg:number{ id="startIdx", label="Start Idx:", text="1"}
 
 addTilemaps()
