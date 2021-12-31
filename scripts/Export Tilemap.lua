@@ -8,16 +8,20 @@ local function export_tileset(tileset, name, padding, inputWidth, startIdx)
   local grid = tileset.grid
   local size = grid.tileSize
   if #tileset > 0 then
+    if startIdx < 0 then
+      startIdx = 1
+    end
+    local numTiles = #tileset - startIdx
     local spec = spr.spec
     local numCols = inputWidth
-    if numCols > (#tileset - 1) then
-      numCols = #tileset - 1
+    if numCols > numTiles then
+      numCols = numTiles
     end
-    if numCols == 0 then
+    if numCols <= 0 then
       numCols = 1
     end
-    local numRows = math.ceil((#tileset - 1) / numCols)
-    if numRows == 0 then
+    local numRows = math.ceil(numTiles / numCols)
+    if numRows <= 0 then
       numRows = 1
     end
     spec.width = ((size.width + padding) * numCols ) + padding
