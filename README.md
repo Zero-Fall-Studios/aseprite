@@ -4,6 +4,7 @@ This repo is a collection of Aseprite related assets:
 
 - Guides
   - Platform Basic Tiles (This is a starter to create tilemaps for a platformer)
+  - Panels (Panels to practice and just get ideas started)
 - Palettes
   - EGA
 - Basic Scenes
