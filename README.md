@@ -17,6 +17,7 @@ This repo is a collection of Aseprite related assets:
 - Scripts
   - Cel Opacity Wave (This will generate cel opacity with a sin wave)
   - Export Tilemap (This will create a brand new image from tilemap data)
+  - Export Palette To Json (Creates a Json file with all the colors from the current palette)
 - Tilemaps
   - Platformer
     - Grass / Dirt Tiles
