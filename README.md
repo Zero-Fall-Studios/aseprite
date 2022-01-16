@@ -21,3 +21,5 @@ This repo is a collection of Aseprite related assets:
 - Tilemaps
   - Platformer
     - Grass / Dirt Tiles
+- UI
+  - Caramel Bubbles
